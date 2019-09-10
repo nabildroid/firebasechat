@@ -1,2 +1,0 @@
-# firebasechat
-Created with CodeSandbox
