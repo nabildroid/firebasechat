@@ -88,12 +88,13 @@
 				//upload picture
 				if(this.fileSource){
 					this.uploadFlag=true;
-					let fileName=this.profile.uid+"-"+Math.random().toString().slice(2,10);
+					let fileName=this.profile.uid;
 					fileName+="."+this.fileSource.type.slice(6);
 
 					const fileRef=firebase.storage().ref().child("profile/"+fileName);
 					const fileMetaData={customMetadata:{
 						name:this.profile.name+" firechat picture",
+						uid:this.profile.uid,
 						source: window.location.origin
 					}};
 					const uploadTask=fileRef.put(this.fileSource,fileMetaData);

@@ -1,0 +1,19 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "conversation",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "parts",
+          "arrayConfig": "CONTAINS"
+        },
+        {
+          "fieldPath": "partsnapshot.`0`.name",
+          "order": "ASCENDING"
+        }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}
