@@ -25,8 +25,8 @@
 		name:"sign-up",
 		data(){
 			return {
-				email:"contact@laknabil.me",
-				password:"11111111"
+				email:"",
+				password:""
 			}
 		},
 		computed:{
