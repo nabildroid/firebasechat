@@ -31,8 +31,8 @@
 		data(){
 			return{
 				email:"",
-				password:"11111111",
-				password1:"11111111"
+				password:"",
+				password1:""
 			}
 		},
 		computed:{
