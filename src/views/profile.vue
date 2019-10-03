@@ -47,17 +47,22 @@
 		},
 		methods:{
 			async initialize(user){
-				console.log("initialize profile");
 				this.userRef=await firebase.firestore().collection("users").doc(user.uid);
-				this.profile=await this.userRef.get();
-				this.profile=this.profile.data();
-				this.profile.uid=user.uid;
+				console.log("initialize profile");
+				const fetshUserDoc=this.userRef.onSnapshot(async snapshot=>{
+				 	if(snapshot.exists){
+				 		fetshUserDoc(); //stop listener to user doc
+					 	this.profile=snapshot;
+					 	this.profile=this.profile.data();
+					 	this.profile.uid=user.uid;
 
-				//check is this user pro member
-				this.$set(this.profile,"pro",await this.$parent.userClaims("pro"));
-				
-				if(!this.friends.length)
-					await this.initializeFriends();
+					 	//check is this user pro member
+					 	this.$set(this.profile,"pro",await this.$parent.userClaims("pro"));
+					 	console.log("friendsNumber: " + await this.$parent.userClaims("friendsNumber"))
+					 	if(!this.friends.length)
+					 		await this.initializeFriends();
+				 }
+				});
 			},
 
 			async initializeFriends(){

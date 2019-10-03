@@ -79,8 +79,8 @@
 			async searchForUser(){
 				if(this.search.length>2){
 					let refs=firebase.firestore().collection("users");
-					refs = refs.where("name",">=",this.search);
-					refs = refs.where("name","<=",this.search + '\uf8ff');
+					refs = refs.where("name",">=",this.search.toLowerCase());
+					refs = refs.where("name","<=",this.search.toLowerCase() + '\uf8ff');
 
 					await refs.get().then(snapshot=>{
 						this.users=[];
@@ -95,7 +95,7 @@
 				}
 			},
 			add(user){
-				if(this.friends.length<1){
+				if(1||this.friends.length<1 || this.profile.pro){
 					this.users.splice(this.users.findIndex(u=>u.id==user.id),1);
 					console.log(user);
 					this.Conversation(user,"add",{
@@ -143,14 +143,18 @@
 				console.log(data);
 				const ref=firebase.firestore().collection("conversation").doc(docName);
 
+				const promises=[];
 				if(method == "add"){
 					data.parts=[this.profile.uid,user.id]
-					ref.set(data);
+					promises.push(ref.set(data));
 				}
 				else if(method == "update")
-					ref.update(data);
+					promises.push(ref.update(data));
 				else if(method == "delete")
-					ref.delete()
+					promises.push(ref.delete());
+
+				Promise.all(promises).catch(err=>alert(err.message));
+
 			}
 
 		}

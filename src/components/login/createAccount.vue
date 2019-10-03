@@ -3,10 +3,6 @@
 		<h1>create account</h1>
 		<div id="inputs">
 			<div>
-				<label>user name</label>
-				<input type="text" v-model="userName" placeholder="user name">
-			</div>
-			<div>
 				<label>email</label>
 				<input type="email" v-model="email" placeholder="email">
 			</div>
@@ -34,7 +30,6 @@
 		name:"sign-up",
 		data(){
 			return{
-				userName:"",
 				email:"",
 				password:"11111111",
 				password1:"11111111"
@@ -42,24 +37,15 @@
 		},
 		computed:{
 			correctTyping(){
-				return this.userName&&this.email&&this.password==this.password1&&this.password!="";
+				return this.email&&this.password==this.password1&&this.password!="";
 			}
 		},
 		methods:{
 			create(){
-				firebase.auth().createUserWithEmailAndPassword(this.email,this.password).then(user=>{
-					if(user.additionalUserInfo.isNewUser){
-						const data={
-							name:this.userName,
-							picture:"http://eng.uokerbala.edu.iq/stdform/student.png",
-							status:"online",
-						};
-						firebase.firestore().collection("users").doc(user.user.uid).set(data).catch(err=>{
-							firebase.auth().currentUser.delete().then(()=>{
-								alert("Dont't play with my firebase");
-							});
-						});
-					}
+				firebase.auth().createUserWithEmailAndPassword(this.email,this.password)
+				.then(user=>{
+					if(user.additionalUserInfo.isNewUser)
+						this.$router.push("profile/setting");
 				});
 			}
 		}

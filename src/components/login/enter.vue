@@ -37,7 +37,9 @@
 		methods:{
 			login(){
 				if(this.correctTyping){
-					firebase.auth().signInWithEmailAndPassword(this.email,this.password)
+					firebase.auth().signInWithEmailAndPassword(this.email.trim(),this.password).catch(err=>{
+						alert(err.message);
+					})
 				}else alert("error");
 			}
 		}

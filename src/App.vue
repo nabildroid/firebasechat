@@ -26,6 +26,7 @@ export default {
     async userClaims(name){
       if(this.user){
         const idToken=await firebase.auth().currentUser.getIdTokenResult();
+        console.log(idToken);
         return idToken.claims[name];
       }
     }
